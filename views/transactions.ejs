@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction History</title>
+</head>
+<body>
+  <h1>Transaction History</h1>
+  <table border="1">
+    <tr>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>Status</th>
+    </tr>
+    <% transactions.forEach(transaction => { %>
+      <tr>
+        <td><%= transaction.orderId %></td>
+        <td><%= transaction.User.fullName %></td>
+        <td><%= transaction.amount.toFixed(2) %></td>
+        <td><%= transaction.status === 1 ? 'Success' : 'Failed' %></td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>
