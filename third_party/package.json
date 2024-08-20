@@ -1,0 +1,14 @@
+{
+  "name": "karyapay",
+  "version": "1.0.0",
+  "description": "Payment Gateway for business and personal needs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karya Tekno",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.28.1"
+  }
+}
