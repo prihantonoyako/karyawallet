@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 const { login } = require('../services/authService');
 
-router.get('/login', function(req, res, next) {
-    res.render('auth/login');
+router.get('/login', (req, res, next) => {
+    res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', bodyParser.urlencoded({ extended: true}), async (req, res) => {
     const { identifier, password } = req.body;
   
     try {
@@ -23,7 +24,7 @@ router.post('/login', async (req, res) => {
           if (err) {
             return res.status(500).send('Failed to save session');
           }
-          res.redirect('/transaction/deposit');
+          res.redirect('/dashboard');
         });
       } else {
         res.status(500).send('Session not available');

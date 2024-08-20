@@ -1,18 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit</title>
+    <%- include("./layouts/header.ejs") %>
+    <link rel="stylesheet" href="/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 </head>
-<body>
-    <h1>Deposit Funds</h1>
-    <form action="/transaction/deposit" method="POST">
-        <label for="orderId">Order ID:</label>
-        <input type="text" name="orderId" id="orderId" required><br>
-        <label for="amount">Amount:</label>
-        <input type="number" step="0.01" name="amount" id="amount" required><br>
-        <button type="submit">Deposit</button>
-    </form>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+  <div class="wrapper">
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__wobble" src="/admin-lte/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    </div>
+
+    <%- include("./layouts/navbar.ejs") %>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link">
+        <img src="/admin-lte/dist/img/AdminLTELogo.png" alt="EvoStaff" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">KaryaWallet</span>
+      </a>
+      <%- include("./layouts/sidebar.ejs") %>
+    </aside>
+
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content">
+        <div class="container-fluid">
+          <div clas="row">
+            <form action="/transaction/deposit" class="form-horizontal" method="POST">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Deposit</h3>
+              </div>
+
+              <div class="card-body">
+                <div class="form-group row">
+                    <label for="last_name" class="col-sm-3 col-form-label">Amount</label>
+                    <div class="col-sm-9">
+                        <input id="amount" name="amount" type="number" step="0.01" class="form-control" placeholder="Enter your money">
+                    </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                  <a class="btn btn-primary" href="/dashboard">Back</a>
+                  <button type="submit" class="btn btn-success float-right">Send</button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal fade" id="modal-logout">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Logout</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <form id="logout_form" action="/auth/logout" method="POST">
+                <button type="submit" class="btn btn-danger">Yes</button>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    
+    <%- include("./layouts/footer.ejs") %>
+
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include("./layouts/scripts.ejs") %>
+  <!-- overlayScrollbars -->
+  <script src="/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+  <!-- jQuery Mapael -->
+  <script src="/admin-lte/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="/admin-lte/plugins/raphael/raphael.min.js"></script>
+  <script src="/admin-lte/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+  <script src="/admin-lte/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+  <!-- ChartJS -->
+  <script src="/admin-lte/plugins/chart.js/Chart.min.js"></script>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/admin-lte/dist/js/demo.js"></script>
+
+  <script>
+    $(document).ready(function() {
+        $('a.nav-link[data-widget="dark-mode"]').click(function(event) {
+            $('a.nav-link[data-widget')
+            // Prevent the default action of the link
+            event.preventDefault();
+            
+            var isSlide = $(this).data('slide');
+
+            if (isSlide === true || isSlide === 'true') {
+                $(this).data('slide', 'false');
+                $('body').removeClass('dark-mode');
+            } else {
+                $(this).data('slide', 'true');
+                $('body').addClass('dark-mode');
+            }
+        });
+    });
+  </script>
 </body>
 </html>

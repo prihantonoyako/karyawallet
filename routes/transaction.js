@@ -1,20 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 const { makeDeposit } = require('../services/paymentService');
 const { updateWallet } = require('../services/walletService');
 const { decodeToken } = require('../utils/jwt');
 const { User, Wallet, Transaction } = require('../models');
+const { auth } = require('../middlewares/auth');
 
+router.use(auth);
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/deposit', function (req, res) {
+router.get('/deposit', (req, res) => {
     res.render('deposit');
 });
 
-router.get('/withdraw', function (req, res) {
+router.get('/withdraw', (req, res) => {
   res.render('withdraw');
 });
 
-router.post('/deposit', async function (req, res) {
+router.post('/deposit', async (req, res) => {
   const userIdentifier = decodeToken(req.session.token);
   const { orderId, amount } = req.body;
 
@@ -36,7 +41,7 @@ router.post('/deposit', async function (req, res) {
               status: depositResult.status,
               userId: user.id
           });
-          return res.json({ success: true, depositResult });
+          return res.redirect('/report/transactions')
       } else {
           return res.json({ success: false, depositResult });
       }
@@ -77,7 +82,7 @@ router.post('/withdraw', async (req, res) => {
       userId: user.id
     });
 
-    return res.json({ success: true, message: 'Withdrawal successful' });
+    return res.redirect('/report/transactions');
   } catch (error) {
     console.error('Error handling withdrawal request:', error.message);
     return res.status(500).json({ error: 'Internal server error' });
