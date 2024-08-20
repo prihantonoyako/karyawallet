@@ -4,7 +4,11 @@ const fastify = Fastify({
 });
 
 fastify.post('/deposit', async function handler(request, reply) {
-    return request.body;
+    return reply.code(200).header('Content-Type', 'application/json; charset=utf-8').send({
+        order_id: request.body.order_id,
+        amount: request.body.amount,
+        status: 1
+    });
 });
 
 try {
