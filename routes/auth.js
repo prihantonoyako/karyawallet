@@ -14,7 +14,7 @@ router.post('/login', bodyParser.urlencoded({ extended: true}), async (req, res)
       const token = await login(identifier, password);
   
       if (!token) {
-        return res.status(401).send("Wrong credentials");
+        return res.render('login');
       }
   
       // Store token in session
@@ -32,6 +32,11 @@ router.post('/login', bodyParser.urlencoded({ extended: true}), async (req, res)
     } catch (error) {
       res.status(500).send('An error occurred');
     }
+});
+
+router.post('/logout', async (req, res) => {
+  req.session.destroy();
+  return res.redirect('/auth/login');
 });
 
 router.get('/register', function(req, res, next) {
